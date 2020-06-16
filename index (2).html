@@ -1,0 +1,1404 @@
+<!DOCTYPE>
+<html>
+  <head>
+
+
+    <script Language="JavaScript">
+
+      <!-- Helpers for JSI page...>
+      
+      // Navigation - Start
+      
+      function goback(){
+      
+      alert("Good Bye!");
+      
+      history.go(-1);
+      
+      }
+      
+      function gettheDate() {
+      
+      Todays = new Date();
+      
+      TheDate = "" + (Todays.getMonth()+ 1) +" / "+ Todays.getDate() + " / " + (Todays.getYear() + 1900) 
+      
+      document.clock.thedate.value = TheDate;
+      
+      }
+      
+      // Navigation - Stop
+      
+      // Netscapes Clock - Start
+      
+      // this code was taken from Netscapes JavaScript documentation at
+      
+      // www.netscape.com on Jan.25.96
+      
+      
+      
+      var timerID = null;
+      
+      var timerRunning = false;
+      
+      function stopclock (){
+      
+        if(timerRunning)
+      
+          clearTimeout(timerID);
+      
+        timerRunning = false;
+      
+      }
+      
+      
+      
+      function startclock () {
+      
+        // Make sure the clock is stopped
+      
+        stopclock();
+      
+        gettheDate()
+      
+        showtime();
+      
+      }
+      
+      
+      
+      function showtime () {
+      
+        var now = new Date();
+      
+        var hours = now.getHours();
+      
+        var minutes = now.getMinutes();
+      
+        var seconds = now.getSeconds()
+      
+        var timeValue = "" + ((hours >12) ? hours -12 :hours)
+      
+        timeValue += ((minutes < 10) ? ":0" : ":") + minutes
+      
+        timeValue += ((seconds < 10) ? ":0" : ":") + seconds
+      
+        timeValue += (hours >= 12) ? " P.M." : " A.M."
+      
+        document.clock.face.value = timeValue;
+      
+        // you could replace the above with this
+      
+        // and have a clock on the status bar:
+      
+        // window.status = timeValue;
+      
+        timerID = setTimeout("showtime()",1000);
+      
+        timerRunning = true;
+      
+      }
+      
+      // Netscapes Clock - Stop
+      
+      
+      
+      // end Helpers -->
+      
+
+/*------------------------------------------------------------
+Document Text Sizer- Copyright 2003 - Taewook Kang.  All rights reserved.
+Coded by: Taewook Kang (txkang.REMOVETHIS@hotmail.com)
+Web Site: http://txkang.com
+Script featured on Dynamic Drive (http://www.dynamicdrive.com)
+--------------------------------------------------------------*/
+
+//Especificar a que elementos afectará, añadiendo o quitando de la lista:
+var tgs = new Array( 'div','td','tr');
+
+//Indicar el nombre de los diferentes tamaños de fuente:
+var szs = new Array( 'xx-small','x-small','small','medium','large','x-large','xx-large' );
+var startSz = 2;
+
+function ts( trgt,inc ) {
+if (!document.getElementById) return
+var d = document,cEl = null,sz = startSz,i,j,cTags;
+
+sz += inc;
+if ( sz < 0 ) sz = 0;
+if ( sz > 6 ) sz = 6;
+startSz = sz;
+
+if ( !( cEl = d.getElementById( trgt ) ) ) cEl = d.getElementsByTagName( trgt )[ 0 ];
+
+cEl.style.fontSize = szs[ sz ];
+
+for ( i = 0 ; i < tgs.length ; i++ ) {
+cTags = cEl.getElementsByTagName( tgs[ i ] );
+for ( j = 0 ; j < cTags.length ; j++ ) cTags[ j ].style.fontSize = szs[ sz ];
+}
+}
+
+
+
+      <!-- Aqui se oculta el script a los visualizadores que no soportan JavaScript
+
+
+
+// keep track of whether we just computed display.value
+
+var computed = false
+
+
+
+function pushStack(form)
+
+{
+
+    form.stack.value = form.display.value
+
+    form.display.value = 0
+
+}
+
+
+
+//
+
+// Define a function to add a new character to the display
+
+//
+
+function addChar(input, character)
+
+{
+
+    // auto-push the stack if the last value was computed
+
+    if(computed) {
+
+	pushStack(input.form)
+
+	computed = false
+
+    }
+
+
+
+    // make sure input.value is a string
+
+    if(input.value == null || input.value == "0")
+
+        input.value = character
+
+    else
+
+        input.value += character
+
+}
+
+
+
+function deleteChar(input)
+
+{
+
+    input.value = input.value.substring(0, input.value.length - 1)
+
+}
+
+
+
+function add(form)
+
+{
+
+    form.display.value = parseFloat(form.stack.value)
+
+                       + parseFloat(form.display.value)
+
+    computed = true
+
+}
+
+
+
+function subtract(form)
+
+{
+
+    form.display.value = form.stack.value - form.display.value
+
+    computed = true
+
+}
+
+
+
+function multiply(form)
+
+{
+
+    form.display.value = form.stack.value * form.display.value
+
+    computed = true
+
+}
+
+
+
+function divide(form)
+
+{
+
+    var divisor = parseFloat(form.display.value)
+
+    if(divisor == 0) {
+
+	alert("Don't divide by zero, pal...");
+
+	return
+
+    }
+
+    form.display.value = form.stack.value / divisor
+
+    computed = true
+
+}
+
+
+
+function changeSign(input)
+
+{
+
+    // could use input.value = 0 - input.value, but let's show off substring
+
+    if(input.value.substring(0, 1) == "-")
+
+	input.value = input.value.substring(1, input.value.length)
+
+    else
+
+	input.value = "-" + input.value
+
+}
+<!-- done hiding from old browsers -->
+
+
+
+
+
+
+var objWindowPadre
+	objWindowPadre = window.parent;
+   var intActivo=0;
+   var anchoTD=15;
+   var anchoTD1=18;
+   var colorHead="red";
+   var colorTabla="white";
+   var colorBorde="#112233";
+
+   var time = new Date();
+   var anno=time.getFullYear();
+   var mes=time.getMonth()+1;
+   var dia=time.getDate()
+   var aDias=new Array(0,31,28,31,30,31,30,31,31,30,31,30,31);
+
+   function padl(n, w, c) {
+    n = String(n);
+    while (n.length < w)
+        n = c + n;
+    return n;
+}
+
+
+   //funcion que se ejecuta al cargar el formulario
+   function iniciar(){
+   
+   	if (anoBisiesto(anno))
+    {
+		aDias[2]=29;
+    }
+    else
+    {
+		aDias[2]=28;
+    }
+    escribeTablaMes(dia,mes,anno);
+   }
+   //cuando pinchamos sobre el calendario
+   function pinchar(evento){
+    //primer dia de la semana
+    var oTR = null;
+    if (window.event)
+	    oTR = window.event.srcElement;
+	else
+		oTR = evento.currentTarget;
+	var sFechaSel=oTR.id.substring(2);
+	//Recupero las variables de la URL
+	var urlEnd = document.URL.indexOf('?');
+	var values = new Array();
+	var names;  
+	if (urlEnd != -1){
+		var params = document.URL.substring(urlEnd+1, document.URL.length).split('&');
+		for(i=0; i<params.length; i++) {
+		names = params[i].split('=');
+		values[names[0]] = names[1];
+		}
+	}
+	var name = unescape(values["textBox"]);
+	window.opener.setFecha(sFechaSel);
+	if (window.opener.document.forms[0] != null) {
+		
+	}
+	top.window.close();
+   }
+
+   //Retorna el nombre del mes
+   function getNombreMes(iMes){
+    var sMes=""
+    switch(iMes){
+     case 1:
+      sMes="Enero";
+      break;
+     case 2:
+      sMes="Febrero";
+      break;
+     case 3:
+      sMes="Marzo";
+      break;
+     case 4:
+      sMes="Abril";
+      break;
+     case 5:
+      sMes="Mayo";
+      break;
+     case 6:
+      sMes="Junio";
+      break;
+     case 7:
+      sMes="Julio";
+      break;
+     case 8:
+      sMes="Agosto";
+      break;
+     case 9:
+      sMes="Septiembre";
+      break;
+     case 10:
+      sMes="Octubre";
+      break;
+     case 11:
+      sMes="Noviembre";
+      break;
+     case 12:
+      sMes="Diciembre";
+      break;
+     default:
+      sMes="";
+    }
+    return sMes;
+   }
+
+
+   //Retorna true si el año es bisiesto y false en caso contrario
+   function anoBisiesto(sAno){
+ 	var iAno=parseInt(sAno);
+	if(iAno%4 != 0)
+		return false;
+	else{
+		if (iAno%400==0)
+			return true;
+		else
+			if (iAno%100==0)
+				return false;
+			else
+				return true;
+	}
+   }
+
+   //Retorna 1: lunes; 2 Martes ...
+   function getDayNumber(dia,mes,anno){
+    var day1=new Date(anno,mes-1,dia)
+    var nDay = day1.getDay();
+    if (nDay==0) nDay=7;
+    return nDay;
+   }
+	
+	function cambiarFondo (evento)
+	{
+		if (window.event) {
+			var objTR =window.event.srcElement;
+			if (objTR.style.backgroundColor != '#cbdced')
+			{
+			
+				objTR.style.backgroundColor = '#cbdced'
+			}
+			else
+			{
+				objTR.style.backgroundColor = '#ffffff'
+			}
+			if (objTR.style.cursor != 'hand')
+			{
+			
+				objTR.style.cursor = 'hand'
+			}
+			else
+			{
+				objTR.style.cursor= 'default'
+			}
+		}
+	}   
+
+   //Escribe los numeros de los dias:
+   //  -  - 1  2  3  4  5
+   //  6  7 8  9 10 11 12 ...
+   function escribeTablaMes(dia,mes,anno){
+   
+    var clasedia=""
+    var icDia=1;
+    var iIniSemana=1;
+    
+    //obtengo el dia de la semana del 1 del mes a dibujar
+    var iDay=getDayNumber(1,mes,anno);
+    
+    //Borramos la los dias del calendario
+    var j = 0
+    while(j<=intActivo)
+    {
+		document.getElementById("tablacalendario").deleteRow(0);		
+		j++;
+	}
+    intActivo = -1
+    while((icDia-iDay+1)<=aDias[mes])
+    {
+		// A <TR> le daremos el nombre del primer dia de la semana
+		// si es el primer dia del mes sera 1; en cualquier otro caso sera Lunes
+		var sNameTD=""
+		intActivo++
+		objTR = document.getElementById("tablacalendario").insertRow(intActivo);
+		objTR.id =intActivo; 
+		objTR.align= 'center';
+		for(;icDia<iIniSemana+7 ;icDia++)
+		{
+		sNameTD="TD"+padl((icDia-iDay+1),2,"0")+"/"+padl(mes,2,"0")+"/"+anno;
+		if( (icDia>=iDay) && ((icDia-iDay+1)<=aDias[mes]))
+		{
+			if (icDia < iIniSemana+5)//Si es dia de la semana
+			{
+				clasedia="textocalendario"
+			}
+			else
+			{
+				clasedia="textofestivo"
+			}
+			objTD = objTR.insertCell(objTR.cells.length);
+			objTD.id = sNameTD;	
+			objTD.style.backgroundColor='#ffffff';
+			objTD.style.width=anchoTD;
+			objTD.className=clasedia;
+			objTD.onclick=pinchar;
+			objTD.onmouseover=cambiarFondo;
+			objTD.onmouseout=cambiarFondo;	
+			objTD.innerHTML = (icDia-iDay+1);		
+		}
+		else
+		{
+			objTD = objTR.insertCell(objTR.cells.length);
+			objTD.id = sNameTD;	
+			objTD.style.width=anchoTD;		
+			objTD.innerHTML = ' ';			
+		}
+	
+     }
+    
+     iIniSemana=icDia;
+    }//fin de  while((icDia-iDay+1)<=aDias[mes])
+    document.forms[0].cbMes.focus()
+   }
+
+
+   //funcion que redibuja el calendario con el mes y año seleccionado
+   function cambiaCalendario(){
+    if (anoBisiesto(document.forms[0].cbAnno[document.forms[0].cbAnno.selectedIndex].value))
+    { aDias[2]=29;}
+    else
+    { aDias[2]=28;}
+    escribeTablaMes(1,document.forms[0].cbMes[document.forms[0].cbMes.selectedIndex].value,document.forms[0].cbAnno[document.forms[0].cbAnno.selectedIndex].value); 
+   }
+
+
+      </script>
+
+
+    <title>Pintores</title>
+
+    <style>
+
+      body {
+      background-image: url("https://besthqwallpapers.com/Uploads/2-4-2019/85709/thumb2-black-floral-pattern-4k-floral-vintage-pattern-black-vintage-background-floral-patterns.jpg");
+      }
+
+      H1 {
+  color: #ec0000;
+  border: 1px solid rgb(0, 89, 255);
+  margin: 25px 50px 75px;
+}
+
+H2 {
+  color: #6500a8;
+  text-align: center;
+  color: rgb(0, 116, 151);
+}
+
+H3 {
+  color: #fffb00;
+  text-align: left;
+  color: rgb(155, 0, 108);
+  text-shadow: 2px ;
+}
+
+tr {
+  color: #00ff15;
+  text-align: right;
+  color: #ff0000;
+  text-shadow: 2px 2px 5px;
+}
+      
+#A {
+  color: #700086;
+  text-align: left;
+  color: rgb(250, 1, 217);
+  text-shadow: 2px ;
+}
+
+
+      
+      </style>
+  </head>
+
+  <script>
+    function cambia() {
+     document.getElementById("texto").innerHTML = "Ahora me ves";
+    }
+    </script>
+
+  <boody bgcolor="#00FFFF" onLoad="startclock()">
+    
+<meta name="viewport" content="width=divice-width, initial-scale=1.0"> <!--Indica que el contenido se mostrará con relación al dispositivo-->
+<H1 id="A" ><MARQUEE BEHAVIOR=SCROLL style="background-color:#00000090;">¡TOP 12 - PINTORES M&Aacute;S FAMOSOS - TOP 12 !</MARQUEE>
+
+
+  <CENTER>
+    <h2>Zoom de p&aacute;gina</h2></center>
+    
+    <center>
+    <a href="javascript:ts('body',1)">+ Aumentar</a> | <a
+    href="javascript:ts('body',-1)">- Disminuir</a>
+    </center>
+    
+    <hr>
+
+
+
+
+
+  <CENTER>
+
+
+
+
+    
+    
+    
+    <table border>
+    
+    <tr>
+    
+       <td><form name="clock" onSubmit="0"></td>
+    
+    </tr>
+    
+    
+    
+    <tr>
+    
+       <td colspan=2>Hoy es: <input type="text" name="thedate" size=12
+    
+               value=""></td>
+    
+       <td colspan=2>La hora es: <input type="text" name="face" size=12
+    
+               value=""></td></form>
+    
+    </tr>
+    
+    
+    
+    
+    
+    </table>
+    
+    </CENTER>
+    
+    
+    
+    <hr>
+    
+
+    <TABLE border="0" cellspacing=0 width="172px">
+      <TR><TD align="center">
+       <CENTER>
+         <FORM name="frmCalendario_sup">
+          
+          <SELECT name="cbMes" class=textocalendario onchange="cambiaCalendario()">
+          <SCRIPT>
+           for(var i=1;i<=12;i++){
+            var strSelected="";
+            if(i==mes) strSelected="SELECTED"
+            document.write("<OPTION value="+i+" "+strSelected+">"+getNombreMes(i));
+           }
+          </SCRIPT>
+          </SELECT>
+          <SELECT name="cbAnno" class=textocalendario onchange="cambiaCalendario()">    
+          <SCRIPT>
+           for(var i=anno-100;i<=anno+10;i++){
+            var strSelected="";
+            if(i==anno) strSelected="SELECTED"
+            document.write("<OPTION value="+i+" "+strSelected+">"+i);
+           }
+          </SCRIPT>
+      
+          </SELECT>
+      </FORM>
+      <TABLE border="1" borderColor=red cellpading=0 cellspacing=0>
+      <TR><TD>
+        <TABLE bgColor="+colorHead+" cellpading=1 cellspacing=1 border=0>
+        <TR align='center'>
+          <TD class=diascalendario style='width:15'>L</TD>
+          <TD class=diascalendario style='width:15'>M</TD>
+          <TD class=diascalendario style='width:15'>X</TD>
+      
+          <TD class=diascalendario style='width:15'>J</TD>
+          <TD class=diascalendario style='width:15'>V</TD>
+          <TD class=diasfestivo style='width:15'><b>S</b></TD>
+          <TD class=diasfestivo style='width:15'><b>D</b></TD>
+          </TR>
+          </TABLE>   
+       </TD></TR>
+      
+       <TR><TD>
+        <TABLE bgColor='white' id="tablacalendario" cellpading=1 cellspacing=1 border=0>
+        <tr><td>
+        </td></tr>
+          </TABLE>  
+       </TD></TR>
+       </TABLE>
+        </TD></TR>
+       </TABLE>    
+       
+      <hr>
+      <center>
+      <h3>
+      [<a href="javascr.htm">Volver</a>]
+      </h3>
+      </center>
+  <boody>
+    
+
+
+    <form action="ejemplo.php" method="get">
+      <p>Apellido:
+        <input type="text" name="apellidos" size="40" placeholder="">
+      </p>
+      <p>Nombre: <input type="text" name="nombre" size="40"></p>
+      <p>Nacionalidad: <input type="text" name="nacionalidad" size="20"></p>
+      
+      <p>Año de nacimiento: <input type="number" name="nacido" min="1900"></p>
+      <p>Sexo:
+        <input type="radio" name="hm" value="h"> Hombre
+        <input type="radio" name="hm" value="m"> Mujer
+      </p>
+      <p>
+        <input type="submit" value="Enviar">
+        <input type="reset" value="Borrar">
+      </p>
+    </form>
+
+    <H1>ESTAS SON LAS PLATAFORMAS EN DONDE NOS PUEDEN ENCONTRAR</H1>
+   
+    <a title="" href="https://es-la.facebook.com/login/"><img src="https://www.lavanguardia.com/r/GODO/LV/p7/WebSite/2020/04/08/Recortada/2020-04-07T135245Z_1922724931_RC2PZF9VQHD0_RTRMADP_3_EU-FACEBOOK-ANTITRUST_20200407155531-k6rD-U48387673984gNB-992x558@LaVanguardia-Web.jpg" alt="Estamos en Facebook" width="100" height="100" /></a>
+
+<a title="" href="https://web.whatsapp.com/"><img src="https://elandroidelibre.elespanol.com/wp-content/uploads/2019/03/modo-oscuro-whatsapp.jpg" alt="Este es nuestro contacto en Whatsapp" width="100" height="100" /></a>
+
+<a title="" href="https://www.instagram.com/?hl=es-la"><img src="https://is3-ssl.mzstatic.com/image/thumb/Purple123/v4/69/de/40/69de4012-e448-be60-90e1-813339b8fe8b/Prod-0-0-1x_U007emarketing-0-0-0-6-0-0-sRGB-0-0-0-GLES2_U002c0-512MB-85-220-0-0.png/1200x630wa.png" alt="Tenemos una pagina en Istagram" width="100" height="100" /></a>
+
+<a title="" href="https://www.youtube.com/"><img src="https://www.youtube.com/yts/img/yt_1200-vflhSIVnY.png" alt="Tenomos una cuenta en Youtube" width="100" height="100" /></a>
+
+
+
+
+
+
+
+
+<meta name="viewport" content="width=divice-width, initial-scale=1.0"> <!--Indica que el contenido se mostrará con relación al dispositivo-->
+<H1 id="A" ><MARQUEE BEHAVIOR=SCROLL style="background-color:#00000090;">¡TOP 12 - PINTORES M&Aacute;S FAMOSOS - TOP 12 !</MARQUEE>
+
+
+  <p>
+    <div><h1><i> Leonardo da Vinci </i> </h1></div>
+     <img src="https://www.lifeder.com/wp-content/uploads/2019/10/Leonardo-da-vinci-posible-autorretrato-del-artista-galeria-de-los-uffizi-florencia_1c92d9d7_2.jpg" alt="leonardo da vinci" align="center"> 
+     </p>
+    
+    <p><H3>Leonardo da Vinci nació el 15 de abril de 1452. Fue hijo de un notario 
+      y una campesina que nunca se casaron. Hasta los cinco años vivió en casa 
+      de su madre, pero después empezó a vivir con su padre y su madrastra y de vez 
+      en cuando con sus abuelos.
+        Leonardo da Vinci fue un célebre pintor, arquitecto, científico,
+        escritor, escultor, filósofo, ingeniero, inventor, músico y urbanista 
+        florentino que vivió en la Italia renacentista entre 1452 y 1519. Muchos 
+        le consideran el mejor ejemplo del hombre del Renacimiento, interesado 
+        en diversas áreas del saber y en fomentar sus numerosos atributos 
+        creativos e intelectuales.
+
+      Da Vinci cultivó la medicina y la anatomía, y se interesó por develar los 
+      misterios del diseño del cuerpo humano. Además se dedicó a analizar la mecánica
+      y de hecho se atrevió a diseñar artefactos con los que pretendía volar.
+      Suyas además son grandes obras de la cultura y el arte occidentales, conservadas 
+      hasta hoy como parte del legado europeo del siglo XVI especialmente en la pintura. 
+      <h2>Frases celebres:</h2><br>
+    <br>
+   <h3> •  “Así como una jornada bien empleada produce un dulce sueño, así una vida bien usada causa una dulce muerte”.
+    <br>
+    •  “Aquel que no castiga la maldad, ordena que se haga”.
+    <br>
+    •  “El que no valora la vida no se la merece”.
+    </H3></p>
+  
+  
+  
+
+ <h2>LA PINTURAS MAS FAMOSAS</h2>
+
+   <table>
+     <tr>
+       <td>
+        <p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Vitruvian_Man_by_Leonardo_da_Vinci.jpg/422px-Vitruvian_Man_by_Leonardo_da_Vinci.jpg"  width="200" height="300" align="center"></p>
+          </td>
+         <td>
+          <p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Mona_Lisa%2C_by_Leonardo_da_Vinci%2C_from_C2RMF_retouched.jpg/300px-Mona_Lisa%2C_by_Leonardo_da_Vinci%2C_from_C2RMF_retouched.jpg"  width="200" height="300" align="center"></p>
+           </td>
+          <td> 
+            <p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/Dama_z_gronostajem.jpg/250px-Dama_z_gronostajem.jpg"  width="200" height="300" align="center"></p>
+               </td>
+           <td>
+            <p><img src="https://cdn.culturagenial.com/es/imagenes/1200px-the-last-supper-leonardo-da-vinci-high-resolution-32x16-cke.jpg"  width="300" height="200" align="center"></p>
+            </td>
+     </tr>
+<tr>
+  <td>El artista-científico presenta su estudio del “canon de las proporciones humanas”, el otro nombre con el que se conoce esta obra. Si la palabra canon significa “regla”, se entiende, pues, que Leonardo determinó en este trabajo las reglas que describen las proporciones del cuerpo humano, a partir de las cuales se juzga su armonía y belleza.</td>
+  <td>El Retrato de Lisa Gherardini, esposa de Francesco del Giocondo,1​más conocido como La Gioconda (La Joconde en francés) o La Mona Lisa, es una obra pictórica del polímata renacentista italiano Leonardo da Vinci. Fue adquirida por el rey Francisco I de Francia a comienzos del siglo XVI y desde entonces es propiedad del Estado Francés. Se halla expuesta en el Museo del Louvre de París, siendo, sin duda, la «joya» de sus colecciones.</td>
+  <td>Leonardo hace aquí un retrato de Cecilia Gallerani, la amante de Ludovico Sforza, que era el poderoso duque de Milán y además protector y mecenas del artista. Cecilia fue una de las pocas mujeres con las que Leonardo estableció una amistad cercana.
+    Al parecer a da Vinci le caía muy bien la joven Cecilia, que contaba entonces con 16 años. La chica era inteligente, y como vemos también muy bella. Entendía mucho de literatura y música, dos disciplinas muy valoradas por el artista, y juntos charlaban de ello durante buenos ratos. Por ello la cosideraba una Musa, una y “Donna docta”, comparable a grandes mujeres como Aspasia de Mileto o Axiotea, la alumna de Platón y por sus dotes de poeta en la corte la tenían por “gran lume de la lingua italiana”.</td>
+  <td>La última cena es una pintura mural realizada entre los años 1495 y 1498 por el multifacético Leonardo da Vinci (1452-1519). Fue encargada por Ludovico Sforza para el refectorio del Convento de Santa Maria delle Grazie en Milán, Italia. Leonardo no cobró por ella. La escena recrea la última cena de Pascua entre Jesús y sus apóstoles, a partir del relato descrito en el evangelio de Juan, capítulo 13.</td>
+</tr>
+     </table>
+
+<p>
+  <div><h1><i> Frida Kahlo  </i></h1></div>
+
+  <img src="https://ichef.bbci.co.uk/news/999/cpsprodpb/0485/production/_102075110_frida-kahlo-in-blue-satin-b.gif" alt=" Frida Kahlo" width="400" height="400"  align="center">
+</p>
+  <h2>Pintora</h2>
+
+ <H3>Magdalena Carmen Frida Kahlo Calderón, Nació en Coyoacán el 6 de julio de 1907-ibidem, 
+Falleció el 13 de julio de 1954 a los 47 años. Fue una pintora mexicana, Su vida estuvo 
+marcada por el infortunio de contraer poliomielitis y después por un grave accidente en 
+su juventud que la mantuvo postrada en cama durante largos periodos, llegando a someterse 
+hasta a 32 operaciones quirúrgicas.
+ Fue autora de 150 obras, principalmente autorretratos, en los que proyectó sus dificultades 
+ por sobrevivir. La obra de Frida y la de su marido, el pintor Diego Rivera, se influyeron 
+ mutuamente. Ambos compartieron el gusto por el arte popular mexicano de raíces indígenas, inspirando
+  a otros pintores mexicanos del periodo posrevolucionario.
+  <h2>Frases celebres:</h2><br>
+<br>
+<h3>• "Pies para qué los quiero, si tengo alas para volar”
+<br>
+•"Intenté ahogar mis penas en alcohol, pero las condenadas aprendieron a nadar".
+<br>
+•"Amurallar el propio sufrimiento es arriesgarse a que te devore desde el interior".</h3>
+</H3>
+
+
+<h2>LA PINTURAS MAS FAMOSAS</h2>
+<table>
+     <tr>
+       <td>
+        <p><img src="https://cdn.culturagenial.com/es/imagenes/1926-autorretrato-oleo-sobre-lienzo-79-7-x-60-cm-coleccion-particular-cke.jpg"  width="200" height="300" align="center"></p>
+          </td>
+         <td>
+          <p><img src="https://cdn.culturagenial.com/es/imagenes/1931-frida-y-diego-rivera-1931-oleo-sobre-lienzo-100-x-79-cm-san-francisco-museum-of-modern-art-san-francisco-cke.jpg"  width="200" height="300" align="center"></p>
+           </td>
+          <td> 
+            <p><img src="https://cdn.culturagenial.com/es/imagenes/1931-frida-y-la-cesarea-1931-inconcluso-oleo-tela-73-x-62-cm-cke.jpg"  width="200" height="300" align="center"></p>
+               </td>
+           <td>
+            <p><img src="https://cdn.culturagenial.com/es/imagenes/1931-las-dos-fridas-1931-oleo-173-cm-x-173-cm-cke.jpg"  width="200" height="300" align="center"></p>
+            </td>
+     </tr>
+<tr>
+<td>En 1926 Frida Kahlo pinta su primer autorretrato. Tendría para entonces 19 años de edad y sufría las consecuencias del grave accidente que la dejó mucho tiempo postrada en cama. Durante ese tiempo, Frida no podía ver más que el techo de su habitación. Su madre, conmovida, diseñó para ella un caballete especial, que le permitiría pintar acostada. A un lado del caballete, sujetó un espejo, de manera que Frida podía al menos verse a sí misma. Fue así que Frida Kahlo comenzó a autorretratarse. Este sería el cuadro que daría inicio a su indagación personal.</td>
+<td>Más que amor, Frida era una auténtica devota de su marido, Diego Rivera. Siempre percibió a Diego como un talento superior, mientras que se percibía su propia obra como “absolutamente espantosa”.
+
+  Con esta mentalidad, no tuvo problema en asumir el papel de la esposa que respalda y sirve a su marido. Dicen Servando Ortoll y Annette B. Ramírez de Arellano en un ensayo titulado Frida Kahlo Retrato de la artista como esposa empresaria, que esta mujer asumió no solo el cuidado de su esposo, sino que se encargó de su carrera internacional como una auténtica empresaria del arte.</td>
+<td>En el año 1930, un año después de casada, Frida debió enfrentar el primero de sus tres abortos. El de 1930 requirió intervención quirúrgica, ya que era absolutamente imposible el desarrollo del bebé en el útero, debido a las complicaciones de salud de la madre.</td>
+<td>En este cuadro, Frida parece haberse inspirado en el recuerdo de una amiga imaginaria que tuvo a los 6 años de edad, una especie de alter ego. En el cuadro representa sus dos herencias culturales: a la izquierda, la europea; a la derecha, la indígena.
+
+</td>
+ </tr>
+     </table>
+
+
+<p>
+  <div><h1><i> Claude Monet </i></h1></div>
+   <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Claude_Monet_1899_Nadar_crop.jpg/220px-Claude_Monet_1899_Nadar_crop.jpg" alt="Claude Monet" width="400" height="400"  align="center">  
+   
+</p>
+
+   <H3> Claude Monet es un pintor francés conocido por su aportación en el movimiento artístico
+      denominado Impresionismo. Nacido en París, el 14 de noviembre de 1840, pasa su infancia en
+       Normandía, en la ciudad de El Havre, donde se instala junto a su familia con tan sólo cinco
+        años. Poco a poco, el joven Monet logra desarrollar su pasión, empezando por la caricatura
+         y, en 1859, estudiando pintura en la Academia Suiza de París, con el apoyo de su padre. Su 
+         marcha a Argelia al servicio militar en 1861 interrumpe sus estudios, sin embargo, continúa 
+         experimentando diferentes efectos artísticos. A su vuelta a París en 1862 tras una enfermedad
+          que contrae (pleuresía), conoce al pintor suizo Charles Gleyre y trabaja junto a Alfred Sisley,
+           Auguste Renoir y Frédéric Bazille, que se convertirán en buenos amigos.
+
+    Durante la segunda mitad de la década de 1860, Monet pinta un estilo que recuerda al de Edouard Manet.
+     A medida que amplía su estilo, Claude Monet se enfrentará a dificultades económicas, ya que ningún Salón
+     quiere exponer sus lienzos, a pesar del éxito de La Femme en robe verte, que representa a Camille Doncieux,
+      la mujer que se convertirá en su esposa en 1870. Posteriormente, Monet viaja a Londres durante la Guerra franco-prusiana
+       y conoce al comerciante Paul Durand-Ruel, quien le comprará sus lienzos y contribuirá a la difusión de las obras de los 
+       impresionistas.
+       <h2>Frases celebres:</h2><br>
+      <br>
+      <h3> •Todo el mundo discute mi arte y pretende comprender, como si fuera necesario, cuando simplemente es amor.
+<br>
+       •El motivo es para mí del todo secundario; lo que quiero representar es lo que existe entre el motivo y yo.</h3>
+       
+      </H3>
+
+
+      <h2>LA PINTURAS MAS FAMOSAS</h2>
+      <table>
+           <tr>
+             <td>
+              <p><img src="https://www.todocuadros.com.mx/media/catalog/product/cache/1/small_image/450x450/040ec09b1e35df139433887a97daa66f/m/o/monet-impression-sunrise.jpg"  width="250" height="200" align="center"></p>
+                </td>
+               <td>
+                <p><img src="https://www.todocuadros.com.mx/media/catalog/product/cache/1/small_image/450x450/040ec09b1e35df139433887a97daa66f/c/a/campo-amapolas-monet.jpg"  width="250" height="200" align="center"></p>
+                 </td>
+                <td> 
+                  <p><img src="https://www.todocuadros.com.mx/media/catalog/product/cache/1/small_image/450x450/040ec09b1e35df139433887a97daa66f/j/a/jardin-giverny-monet.jpg"  width="200" height="250" align="center"></p>
+                     </td>
+                 <td>
+                  <p><img src="https://www.todocuadros.com.mx/media/catalog/product/cache/1/image/490x387/a4b764e5482f62fb51dae89ed3917009/c/r/crepusculo-venecia-monet.jpg"  width="250" height="250" align="center"></p>
+                  </td>
+           </tr>
+      <tr>
+      <td>El único canal de exposición con que contaban los pintores en la Francia del siglo XIX era el Salón de París, vinculado a la Escuela de Bellas Artes, que contaba con un prestigioso jurado que seleccionaba las obras enviadas. El escándalo de 1863 - con la presentación del Desayuno en la hierba de Manet - motivó la creación del Salón de los Rechazados, que tenía más éxito entre los jóvenes creadores que el oficial al exhibir obras más modernas. </td>
+      <td>Estas flores fueron a menudo protagonistas en la obra de Monet. El pintor francés que inició el impresionismo muestra su entorno en cada pintura, insistiendo y repitiendo a menudo los mismos motivos. Así lo hizo durante casi toda su obra, pero especialmente en una de sus épocas más creativas, y en la que se sitúa este cuadro, en el período feliz de Argenteuil.</td>
+      <td>Cuando las lilas florecieron, Monet las pintó con pinceladas cortas y gruesas de color concentrado, en esta obra aparece el efecto flotante de una capa de flores, la cual se reparte entre zonas soleadas y sombreadas.</td>
+      <td>Obra clásica del impresionismo pintada por Claude Monet en 1908. Se trata de uno de los cuadros más representativos del pintor. Caracterizado por los tonos anaranjados con los que el artista pecibió el ocaso de la ciudad italiana. Se distinguen: el agua y la catedral de Venecia.</td>
+       </tr>
+           </table>
+ <p>
+  <div><h1><i> Sandro Botticelli</i></h1></div>
+  <img src="https://upload.wikimedia.org/wikipedia/commons/d/d4/Sandro_Botticelli_083.jpg" alt="Sandro Botticelli"  width="400" height="400" align="center">
+ </p>
+
+ <H3> Alessandro di Mariano di Vanni Filipepi, apodado Sandro Botticelli, fue un pintor del Quattrocento italiano.
+    Pertenece, a su vez, a la tercera generación cuatrocentista, encabezada por Lorenzo de Médici el Magnífico y Angelo Poliziano. 
+  Fecha de nacimiento: 1 de marzo de 1445, Florencia, Italia
+  Fallecimiento: 17 de mayo de 1510, Florencia, Italia
+  Períodos: Primer renacimiento, Renacimiento, Renacimiento italiano, Escuela florentina
+  Nombre completo: Alessandro di Mariano di Vanni Filipepi
+  El gran representante del renacimiento florentino del quattrocento, Alessandro di Mariano di Vanni Filipepi. 
+  Fue apodado Botticelli pues su hermano tenía una obesidad parecida a un barril. Tal era su gordura que la extendió
+   a los demás miembros de la familia. 
+Sandro adoptó ese nombre con orgullo y hoy brilla entre los demás autores del arte universal.
+<h2>Frases celebres:</h2><br>
+<h3>•Ninguna fortaleza es tan inexpugnable que no pueda entrar en ella un mulo cargado de oro.<br>
+•¡Cuán grande es Dios, y nuestra ciencia, una pequeñez!.<br>
+•Mi vida es un cuento maravilloso, marcado por la suerte y por el éxito.<br>
+•Yo no soy vendible, ni quiero más premio por mi empeño que ver libre a mi nación.</h3>
+   </H3>
+
+
+   <h2>LA PINTURAS MAS FAMOSAS</h2>
+   <table>
+        <tr>
+          <td>
+           <p><img src="https://miviaje.com/wp-content/uploads/2017/09/sandro-botticelli-infierno.jpg"  width="300" height="200" align="center"></p>
+             </td>
+            <td>
+             <p><img src="https://miviaje.com/wp-content/uploads/2017/09/sandro-botticelli-nacimiento-venus.jpg"  width="300" height="200" align="center"></p>
+              </td>
+             <td> 
+               <p><img src="https://miviaje.com/wp-content/uploads/2017/09/botticelli-primavera.jpg"  width="300" height="200" align="center"></p>
+                  </td>
+              <td>
+               <p><img src="https://miviaje.com/wp-content/uploads/2017/09/botticelli-virginia.jpg"  width="300" height="200" align="center"></p>
+               </td>
+        </tr>
+   <tr>
+   <td>¿Te has imaginado cómo sería el infierno alguna vez? Pues Botticelli sí, y no solo eso, sino que lo dibujó. Este es un mapa del infierno que da escalofríos mirar, pero que a la vez despierta la admiración de todos los que lo ven.</td>
+   <td>Se pintó entre el año 1482 y 1484 y es, sin duda, una de las obras más conocidas del pintor italiano. Venus en el centro. A su lado, una ninfa con una manto rojo que representa a la primavera. A la izquierda, dioses alados que soplan entre una lluvia de flores el aliento de vida a la diosa del amor.</td>
+   <td>A Botticelli le encantaba pintar cosas abstractas y convertirlas en personas o en imágenes que nos hicieran verlo como algo real. Eso consiguió con esta, una de sus obras más famosas. En él se ve una especie de rito pagano en el que participan dioses semidesnudos, con un toque rojo, color que Boticelli asociaba a la primavera. Una belleza que admirar y que también se encuentra en la Galería de los Uffizi.</td>
+   <td>Esta fue una de las últimas pinturas de Botticelli, obra en la que trata temas tan profundos como el honor violado y la fidelidad matrimonial. Distintas escenas que conforman una sola se ven en esta espléndida obra, que se encuentra en la Accademia Carrara de Bérgamo, en Italia.</td>
+    </tr>
+        </table>
+
+<p>
+  <div><h1><i> Pedro Pablo Rubens </i></h1></div>
+  <img src="https://www.todocuadros.com.mx/imagenes/artistas/autorretrato-oleo-p-p-rubens.jpg" alt="Pedro Pablo Rubens"  width="400" height="400" align="center">
+</p>
+
+ <H3> Pintor europeo, figura muy destacada del estilo barroco de la escuela flamenca, nacido en el territorio 
+   del Sacro Impero Romano Germánico, actual Alemania, de confesión católica. Bajo su tutela tuvo como alumnos
+    a artistas destacados como Anton van Dyck.
+
+  Educado en un entorno humanista e inmerso en la mentalidad renacentista, lo cual marcó su evidente admiración
+   por la belleza de la Grecia antigua. Hombre creyente y espiritual, pensaba que su pintura era inspirada por Dios
+    y colaboradora importante en el mensaje cristiano, lo que a su vez le llevó a ser un adalid de la contrarreforma católica.
+  
+  El pincel de Rubens es decidido y grácil; busca plasmar un instante dentro de un suceso, realizó esta tarea con
+   tal agudeza, que desde los inicios de su carrera contó con el reconocimiento de los principales formadores 
+   pictóricos flamencos, la nobleza y la monarquía de la época 
+   <h2>Frases celebres:</h2><br>
+  <br>
+<h3>•	Un hombre simple. «Solo soy un hombre simple de pie, a solas con sus viejos pinceles, pidiéndole a Dios por una inspiración....
+   <br>
+   •	El espíritu de creación. «Todos los niños tienen el espíritu de creación....
+   <br>
+   •	La pasión que viene de los cielos....
+   <br>
+   •	El blanco es veneno, pero también útil....
+   <br>
+   •	El tamaño del valor.</h3>
+  </H3>
+</p>
+
+
+<h2>LA PINTURAS MAS FAMOSAS</h2>
+<table>
+     <tr>
+       <td>
+        <p><img src="https://www.todocuadros.com.mx/imagenes/pintores/rubens/rubens-descendimiento-cristo-cruz-1612-1614.jpg"  width="200" height="300" align="center"></p>
+          </td>
+         <td>
+          <p><img src="https://www.todocuadros.com.mx/imagenes/pintores/rubens/rubens-juicio-paris-1639.jpg"  width="300" height="200" align="center"></p>
+           </td>
+          <td> 
+            <p><img src="https://www.todocuadros.com.mx/imagenes/pintores/rubens/rubens-masacre-inocentes-1.jpg"  width="200" height="200" align="center"></p>
+               </td>
+           <td>
+            <p><img src="https://www.todocuadros.com.mx/imagenes/pintores/rubens/rubens-caida-faeton.jpg"  width="200" height="200" align="center"></p>
+            </td>
+     </tr>
+<tr>
+<td>El Descendimiento
+  Antes de 1443. Óleo sobre tabla, 204,5 x 261,5 cm. Sala 058
+  El Descendimiento se pintó para la capilla de Nuestra Señora Extramuros de Lovaina, que fue fundada en el siglo XIV por el gremio de ballesteros, vendida en 1798 y demolida poco después. La ocupación de los fundadores queda indicada por las dos pequeñas ballestas que cuelgan en la tracería de las dos esquinas mayores de la tabla. </td>
+<td>El juicio de Paris
+  Hacia 1638. Óleo sobre lienzo, 199 x 381 cm. Sala 029
+  El relato mitológico del Juicio de Paris tiene su origen en la boda de Tetis y Peleo, donde Eris, diosa de la discordia, reto a la diosa más bella presente a recoger una manzana de oro que había lanzado entre los presentes. Juno, Minerva y Venus, comenzaron una disputa y Júpiter decidió darle la manzana a Mercurio y que éste se la diera a Paris, que actuaría como juez.</td>
+<td>También conocido como "Matanza de los Inocentes".
+
+  Se trata de la escena bíblica conocida como "matanza de los Inocentes", presente en el evangelio según San Mateo, capítulo 2; cuando el Rey romano Herodes, en tiempos del nacimiento de Jesús, manda a matar a todos los niños judíos recién nacidos, para asegurarse de aniquilar al teórico mesías sobre el cual le habían advertido, frente a este suceso el padre putativo de Jesús, José, se exilia en Egipto hasta que pase el peligro. Según el relato, el pueblo judío fue diezmado al extremo matando a todos los niños varones hasta 2 años.</td>
+<td>La caída de Faetón
+  1636 - 1638. Óleo sobre lienzo, 197 x 180 cm. No expuesto
+  Faetón, hijo de Apolo, para comprobar que era realmente hijo del dios Febo, pidió a su padre poder conducir durante un día el carro del sol. A pesar de las advertencias de su padre de la peligrosidad de guiar a los caballos, Faetón insistió y finalmente acabó en desastre.</td>
+ </tr>
+     </table>
+
+<p>
+  <div><h1><i> Diego María  </i></h1></div>
+  <img src="https://mediateca.inah.gob.mx/repositorio/islandora/object/fotografia%3A405594/datastream/TN/tn.jpg" alt="Diego María"  width="400" height="400" align="center">
+</p>
+
+ <H3> Formado en la Escuela de Bellas Artes de San Carlos de la capital mexicana, a la que se había trasladado con
+    su familia a los seis años de edad, Diego Rivera estudió luego por espacio de quince años (1907-1922) en varios países 
+    de Europa (en especial, España, Francia e Italia), donde se interesó por el arte de vanguardia y abandonó el academicismo. 
+    Las obras de este período reflejan, por un lado, un acusado interés por el cubismo sintético de Juan Gris (El guerrillero, 1915), 
+    asumido en su etapa parisina, y por otro una gran admiración por los fresquistas italianos del Quattrocento 
+    (y en especial, por Giotto), lo que motivó su alejamiento de la estética cubista anterior.
+
+  Identificado con los ideales revolucionarios de su patria, Rivera volvió desde tierras italianas a México (1922), 
+  en un momento en que la revolución parecía consolidada. Junto con David Alfaro Siqueiros se dedicó a estudiar en profundidad 
+  las formas primitivas del arte azteca y de la cultura maya, que influirían de manera significativa en su obra posterior. 
+  En colaboración con otros destacados artistas mexicanos del momento (como el propio Siqueiros y José Clemente Orozco), 
+  fundó el sindicato de pintores, del que surgiría el movimiento muralista mexicano, de profunda raíz indigenista
+  <h2>Frases celebres:</h2><br>
+<br>
+<h3>•“Has de saber, mi niña, que en mi acumulador de amor hay energía suficiente (...), sin que deje de parecerme que hace apenas cinco minutos que te encontré y comencé a quererte.”
+<br>
+•“Dicen mis amigos que mi corazón es un multifamiliar. Por mi parte, creo que el mandato amaos los unos a los otros no indica limitación numérica de ninguna especie sino que antes bien, abarca a la humanidad entera.”
+<br>
+•“Yo no tengo fe, la fe, es el patrimonio de los idiotas.”</h3>
+</H3>
+
+
+<h2>LA PINTURAS MAS FAMOSAS</h2>
+<table>
+     <tr>
+       <td>
+        <p><img src="https://mxcity.mx/wp-content/uploads/2017/07/CARGADOR.jpg"  width="200" height="200" align="center"></p>
+          </td>
+         <td>
+          <p><img src="https://mxcity.mx/wp-content/uploads/2017/07/TOLEDO-768x965.jpg"  width="200" height="300" align="center"></p>
+           </td>
+          <td> 
+            <p><img src="https://mxcity.mx/wp-content/uploads/2017/07/TACO.jpg"  width="200" height="300" align="center"></p>
+               </td>
+           <td>
+            <p><img src="https://mxcity.mx/wp-content/uploads/2017/07/LUPE.jpg"  width="300" height="200" align="center"></p>
+            </td>
+     </tr>
+<tr>
+<td>La pintura de Diego Rivera "Cargador de Flores", describe mucho de la cultura mexicana. Se muestra como trabajador de la cultura mexicana y su gente. Este tipo de estilo de arte es el surrealismo. </td>
+<td>Vista de Toledo muestra una perspectiva de Toledo y del río Tajo desde un sitio elevado al sudeste de la ciudad, que resplandece entre la intensidad azul del cielo y el río. La pincelada marca un ritmo dinámico, fragmentando la luz en los techos, torres y puertas, recorriendo la curvatura de los arcos, calles y murallas, y definiendo hendiduras en las pendientes graníticas; predominan los tonos ocres, verdosos, rosados, sienas y grises.</td>
+<td>Esta pintura es muy retro ya que se encuentra a blanco y negro aparte que es como muy clásica en la pintura se ve algo que me llamo mucho la atención que es un niño comiéndose un taco y un perro observándolo </td>
+<td>A medida que Diego se convertía en un famoso artista internacional, su vida social y política era tan colorida como su vida profesional.
+
+  Diego Rivera era un idealista marxista, como muchos jóvenes intelectuales de principios del siglo XX, por lo que era natural que eligiera amigos que compartieran sus creencias.</td>
+ </tr>
+     </table>
+
+<p>
+  <div><h1><i> Salvador Dalí </i></h1></div>
+  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/Salvador_Dal%C3%AD_1939.jpg/1200px-Salvador_Dal%C3%AD_1939.jpg" alt="Salvador Dalí" width="400" height="400" align="center" >
+
+ <H3> (Figueres, Gerona, 1904 - 1989) Pintor español. Si bien parte del inmenso prestigio y popularidad de que gozó
+    ya en vida se debió a sus estrafalarias e impostadas excentricidades, Salvador Dalí acertó a insuflar nueva vida al
+     surrealismo europeo hasta convertirse en su más conocido representante; sus confusas ideas estéticas 
+     (el llamado método paranoico-crítico) fueron mucho menos decisivas que sus impactantes composiciones, a las que
+      trasladó con magistral precisión técnica un personalísimo universo onírico y simbólico, tan nítido y luminoso como
+       profundamente inquietante y perturbador. 
+       <h2>Frases celebres:</h2><br>
+       <br>
+      <h3> •La mayor desgracia de la juventud actual es ya no pertenecer a ella.
+      <br>
+      •Soy un delirio viviente y controlado.
+      <br>
+      •La diferencia entre los recuerdos falsos y los verdaderos es la misma que para las joyas: es siempre falso el que parece más real, el más brillante.
+      </H3>
+</p>
+
+
+<h2>LA PINTURAS MAS FAMOSAS</h2>
+<table>
+     <tr>
+       <td>
+        <p><img src="https://www.todocuadros.com.mx/imagenes/pintores/dali/persistencia-memoria-dali-obra.jpg"  width="250" height="200" align="center"></p>
+          </td>
+         <td>
+          <p><img src="https://www.todocuadros.com.mx/imagenes/pintores/dali/cuadro-sueno-abeja-granada-dali.jpg"  width="200" height="200" align="center"></p>
+           </td>
+          <td> 
+            <p><img src="https://www.todocuadros.com.mx/imagenes/pintores/dali/cisnes-reflejo-elefantes-dali.jpg"  width="200" height="200" align="center"></p>
+               </td>
+           <td>
+            <p><img src="https://www.todocuadros.com.mx/imagenes/pintores/dali/los-elefantes-dali.jpg"  width="200" height="200" align="center"></p>
+            </td>
+     </tr>
+<tr>
+<td>La obra pictórica de Dalí se compone por aproximadamente 1.500 cuadros, de los cuales aquí presentamos los 12 más importantes. Para comprar accede a la tienda a la sección cuadros de Dalí al óleo.</td>
+<td>Obra al óleo sobre tabla de madera, pintada en 1944 por Salvador Dalí.
+
+  Es uno de los cuadros más reconocibles del pintor, en el se encuentran figuras recurrentes que el artista utilizaría durante toda su carrera: elefantes con piernas zancudas, su esposa Gala, un insecto y un paisaje inerte.</td>
+<td>Óleo sobre lienzo pintado en 1937, es uno de los cuadros más notables, donde Dalí completa su composición surrealista con un juego visual magistral. En este caso convierte el reflejo de árboles y cisnes sobre un lago, en elefantes perfectamente delineados.
+
+</td>
+<td>También conocido por su título en inglés "The Elephants". Pintado al óleo sobre tela, el año 1948. Este cuadro recupera las figuras absolutamente fascinantes y oníricas que Dalí había creado hace 4 años, pero esta vez son protagonistas de la obra. El original se encuentra actualmente en el MoMA, New York.</td>
+ </tr>
+     </table>
+<p>
+  <div><h1><i> Francisco Goya</i></h1></div>
+  <ul>
+  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/Vicente_L%C3%B3pez_Porta%C3%B1a_-_el_pintor_Francisco_de_Goya.jpg/220px-Vicente_L%C3%B3pez_Porta%C3%B1a_-_el_pintor_Francisco_de_Goya.jpg" alt="Francisco Goya" width="400" height="400" align="center"> 
+  </ul>
+
+ <H3> (Francisco José de Goya y Lucientes; Fuendetodos, España, 1746 - Burdeos, Francia, 1828) Pintor y grabador español.
+   Goya fue el artista europeo más importante de su tiempo y el que ejerció mayor influencia en la evolución posterior de 
+   la pintura, ya que sus últimas obras se consideran precursoras del impresionismo.
+   Goya aprendió de su padre el oficio de dorador, pero, decidido a dedicarse a la pintura, se trasladó a Madrid para formarse
+    junto a Francisco Bayeu, con cuya hermana se casó en 1775, año de su establecimiento definitivo en Madrid. 
+    Bayeu le proporcionó trabajo en la Real Fábrica de Tapices, para la que realizó sesenta y tres cartones, en su 
+    mayor parte con escenas idílicas y de la vida diaria, plasmadas con colores claros y vivos e 
+    impregnadas de alegría y romanticismo.
+    <h2>Frases celebres:</h2><br>
+<br>
+<h3>•“Más vale ser atrevido, aunque se cometan muchos errores que ser estrecho de mente y demasiado prudente”.
+    <br>
+    •“Los pescadores saben que el mar es peligroso y la tormenta, terrible. ...
+      <br>
+      •“Cuando siento una necesidad de religión, salgo de noche y pinto las estrellas”</h3>
+
+  </H3>
+</p>
+ 
+
+<h2>LA PINTURAS MAS FAMOSAS</h2>
+<table>
+     <tr>
+       <td>
+        <p><img src="https://mymodernmet.com/wp/wp-content/uploads/2019/08/francisco-goya-art-1.jpg"  width="200" height="200" align="center"></p>
+          </td>
+         <td>
+          <p><img src="https://mymodernmet.com/wp/wp-content/uploads/2019/08/francisco-goya-art-4.jpg"  width="200" height="200" align="center"></p>
+           </td>
+          <td> 
+            <p><img src="https://mymodernmet.com/wp/wp-content/uploads/2019/08/francisco-goya-art-2.jpg"  width="200" height="200" align="center"></p>
+               </td>
+           <td>
+            <p><img src="https://mymodernmet.com/wp/wp-content/uploads/2019/08/francisco-goya-art-7.jpg"  width="200" height="200" align="center"></p>
+            </td>
+     </tr>
+<tr>
+<td>oy en día, Francisco de Goya es considerado una de las figuras más influyentes de la historia del arte. Como personaje clave del Romanticismo, un movimiento de finales del siglo XIII, Goya es considerado simultáneamente uno de los últimos grandes maestros y un precursor del arte moderno.</td>
+<td>Cinco años después de terminar La maja desnuda, Goya completó su contraparte, La maja vestida. Esta obra de arte tiene el mismo sujeto, composición y pose. Sin embargo, en este caso, la maja está vestida.</td>
+<td>En 1799, a la edad de 53 años, Goya se convirtió en el primer pintor de cámara, la posición más prestigiosa que podía tener un pintor de la corte española. Siguiendo el enfoque de Diego Velázquez, quien también fue pintor de cámara, Goya fue reconocido por su habilidad para capturar la apariencia de sus sujetos a la perfección.</td>
+<td>Goya tuvo éxito como pintor de la corte. Sin embargo, la que es ampliamente considerada su pintura más famosa no está relacionada con la realeza; de hecho, es una pieza radicalmente política. En El 3 de mayo en Madrid, Goya rinde homenaje a los españoles que se rebelaron contra los ejércitos franceses durante una de las guerras napoleónicas.</td>
+ </tr>
+     </table>
+
+<p>
+  <div><h1><i> Marc Chagall </i></h1></div>
+  <img src="https://www.biografiasyvidas.com/biografia/c/fotos/chagall_marc.jpg" alt="Marc Chagall" width="400" height="400" align="center" >
+
+ <H3> (Vitebsk, 1887 - Saint-Paul-de-Vence, 1985) Pintor francés de origen ruso.
+    Nacido en una pequeña aldea rusa, sus inquietudes artísticas le llevaron a París en 1910,
+     donde alcanzó su madurez artística. Volvió a Rusia en 1914 y participó activamente en la
+      renovación cultural de su país, pero sus disputas con Kazimir Malevich y las exigencias 
+      revolucionarias de vincular compromiso político y obra artística le llevarían a marchar
+       a Alemania en 1924. Su condición de judío le obligaría después a un peregrinaje por Francia
+        y Estados Unidos, que le devolvería definitivamente a Francia al concluir la Segunda Guerra Mundial.
+        Su asimilación de las dos vanguardias señeras, el fauvismo de Matisse y el cubismo de Picasso y Braque,
+         es patente en los cuadros que realizó en sus primeros años parisienses. Composiciones como El poeta 
+         (1911, Philadelphia Museum of Art) y Homenaje a Apollinaire (1912, Stedelijk van Abben Museum, Eindhoven)
+          son plenamente cubistas, mientras otras, como El padre (1911, Colección privada, París) siguen a rajatabla 
+          las consignas fauvistas. 
+          <h2>Frases celebres:</h2><br>
+<br>
+<h3>•Gran arte se recoge donde la naturaleza termina.
+<br>
+•Los dedos deben ser educados, el pulgar nace sabiendo.
+<br>
+•El arte es sobre todo un estado del alma.</h3>
+        </H3>
+</p>
+
+
+<h2>LA PINTURAS MAS FAMOSAS</h2>
+<table>
+     <tr>
+       <td>
+        <p><img src="https://www.todocuadros.com.mx/imagenes/pintores/chagall/450/chagall-yo-y-la-aldea.jpg"  width="200" height="200" align="center"></p>
+          </td>
+         <td>
+          <p><img src="https://www.todocuadros.com.mx/imagenes/pintores/chagall/450/chagall-virgen-aldea.jpg"  width="200" height="300" align="center"></p>
+           </td>
+          <td> 
+            <p><img src="https://www.todocuadros.com.mx/imagenes/pintores/chagall/450/chagall-autorretrato.jpg"  width="200" height="300" align="center"></p>
+               </td>
+           <td>
+            <p><img src="https://www.todocuadros.com.mx/imagenes/pintores/chagall/450/chagall-casa-gris.jpg"  width="200" height="200" align="center"></p>
+            </td>
+     </tr>
+<tr>
+<td>Esta es la obra más conocida de Chagall. La composición fusiona los elementos mayor carga emotiva que el artista vivió en su niñez, en el entorno rural, las afueras de Vítebsk, Bielorrusia. El trabajo de la tierra, campesinos, ganado, casas, iglesia ortodoxa, y en la parte baja un pequeño árbol simbolizando el origen y diversidad de la vida.</td>
+<td>Esta tela muestra claramente el carácter alegre y soñador del pintor. Tardó dos años en hacerla, comenzó en Francia en tiempos en que el ejército de Hitler comenzaba a avanzar y a arrasar las fronteras galas. Fue terminado 2 años después en Nueva York</td>
+<td>Chagall se autorretrató en no pocas ocasiones y ciertamente siempre lo hizo de un modo no realista. Para él la representación del estado de ánimo era lo principal</td>
+<td>Composición con planos quebrados, al uso del cubismo, a lo que se agregan otros elementos de cierto realismo. Al fondo describe el paisaje urbano real de Vítebsk, en primer plano una casa de madera típica de la época.
+
+</td>
+ </tr>
+     </table>
+
+<p>
+  <div><h1><i> Wassili Kandinsky </i></h1></div>
+  <lu>
+    
+  <img src="https://upload.wikimedia.org/wikipedia/commons/8/8a/Vassily-Kandinsky.jpeg" alt="Wassili Kandinsky" width="400" height="400" align="center" >   
+
+</lu>
+ <H3> Vasili Kandinski nació el 5 de diciembre de 1866 en Moscú (Rusia). Hijo de Lidia Ivánovna
+    Tijéieva, natural de Moscú, y de Vasili Silvéstrovich Kandinski, comerciante de té. Su abuela
+     era alemana, y por parte paterna, pertenecía a la aristocracia mongola de la dinastía Gantimúrov.
+      Cursó estudios de Derecho y Ciencias económicas en la Universidad de Moscú. Además, estudió etnografía. 
+      Realizó estudios de pintura y dibujo en Odessa. En 1892, contrajo matrimonio con su prima Anna Chemyákina, 
+      con quien convivió hasta 1904. Cuando cumplió treinta años se trasladó a Múnich. Aunque sus primeras obras se enmarcan 
+      en una línea naturalista, a partir de 1909, tras un viaje a París en el que quedó profundamente impresionado por las obras
+       de los fauvistas y de los postimpresionistas, su pintura se hizo más colorista. Murnau: la salida a Johannstrasse (1908)
+        y Pintura con tres manchas (1914), ambas en el Museo Thyssen-Bornemisza de Madrid, son dos de las obras que realizó en Múnich 
+        antes de volver a Rusia. Wassily Kandinsky falleció el 13 de diciembre de 1944 en Neuilly-sur-Seine, en las afueras de París.
+        <h2>Frases celebres:</h2><br>
+      <br>
+    <h3> •	El crítico de arte es el peor enemigo del arte.
+       <br>
+       •	Todos los procedimientos son sagrados si son interiormente necesarios.
+       <br>
+       •	La disonancia de hoy en música y pintura será la consonancia de mañana.</h3>
+        
+      
+      </H3>
+</p>
+
+
+<h2>LA PINTURAS MAS FAMOSAS</h2>
+<table>
+     <tr>
+       <td>
+        <p><img src="https://historia-arte.com/_/eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpbSI6WyJcL2FydHdvcmtcL2ltYWdlRmlsZVwvMjAwMi1rYW5kaW5za3ktZW4tc3UtY29udGV4dG8uanBnIiwicmVzaXplLDE1MDB8Zm9ybWF0LHdlYnAiXX0.u319ihKoJlwP0qIR9WiRzqgea8MUXk-DyU6ZcRe/lAlc.webp"  width="200" height="200" align="center"></p>
+          </td>
+         <td>
+          <p><img src="https://historia-arte.com/_/eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpbSI6WyJcL2FydHdvcmtcL2ltYWdlRmlsZVwvd2Fzc2lseS1rYW5kaW5za3ktaG91c2VzLWluLW11bmljaC0xOTA4LmpwZyIsInJlc2l6ZSwxNTAwfGZvcm1hdCx3ZWJwIl19.WbNqzrGQIa1qjhImBlNAKKXIQj/BMiNyMbLylku7yWw0.webp"  width="200" height="200" align="center"></p>
+           </td>
+          <td> 
+            <p><img src="https://historia-arte.com/_/eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpbSI6WyJcL2FydHdvcmtcL2ltYWdlRmlsZVwvY2lyY3Vsb3MtMTkyNi5qcGciLCJyZXNpemUsMTUwMHxmb3JtYXQsd2VicCJdfQ.NB0ldZkaSUzdaVpC5FmD5BS5Fv9zshPfEW2Pcq54550.webp"  width="200" height="200" align="center"></p>
+               </td>
+           <td>
+            <p><img src="https://historia-arte.com/_/eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpbSI6WyJcL2FydHdvcmtcL2ltYWdlRmlsZVwvbmVncm8teS12aW9sZXRhLWthbmRpbnNreS5qcGciLCJyZXNpemUsMTUwMHxmb3JtYXQsd2VicCJdfQ.5qe2DmNggLDmZc4yrgXJMBdTH5Ts5Aae9BEv_fo706E.webp"  width="200" height="200" align="center"></p>
+            </td>
+     </tr>
+<tr>
+<td>En medio de esta mierda de mundo, el arte nos sigue salvando. A veces sin darnos cuenta, a veces incluso pese a quien lo quiere eliminar de nuestras vidas (si no genera dinero).
+
+  Pero incluso quieto en una pared tiene el poder de mover.
+  
+  Kandinsky revolucionó el mundo del arte aplicando criterios objetivos (matemáticas, nada menos…) para evocar las más profundas emociones.</td>
+<td>Colores brillantes e intensos típicos del fauvismo y el expresionismo son característicos de esta etapa de Vasily Kandinsky, cuando el artista vivió en Munich y entró en contacto con las vanguardias, montando con otros colegas alemanes el grupo expresionista Der Blaue Reiter (el jinete azul).</td>
+<td>Cuando Kandinsky volvió a su Moscú natal tras la I Guerra Mundial, adoptó ciertos aspectos de los experimentos artísticos utópicos de la vanguardia rusa. Siempre había puesto énfasis en las formas geométricas, pero ahora conectaba con Malevich y compañía en cuanto a su esfuerzo por establecer un lenguaje estético universal.</td>
+<td>A un toque de batuta estamos para que la sinfonía pictórica de Kandinsky empiece a sonar y tan sólo a unas pinceladas para que los armónicos del músico ruso Prokofiev se traduzcan en vibrantes, saturados y puros colores.</td>
+ </tr>
+     </table>
+
+<p>
+  <div><h1><i> Vincent van Gogh </i></h1></div>
+  <img src="https://upload.wikimedia.org/wikipedia/commons/b/b2/Vincent_van_Gogh_-_Self-Portrait_-_Google_Art_Project.jpg" alt="Vincent van Gogh" width="400" height="400" align="center">   
+
+ <H3> Vincent Van Gogh nació el 30 de marzo del año 1853 en Holanda. Era el hijo mayor de un sacerdote 
+   de quien heredó la vocación religiosa, su familia no tenía demasiado dinero. En 1863 entró en el colegio
+    de Zerenbergen, pero tuvo que abandonarlo por la situación económica de sus padres. A los 16 años empezó a
+     trabajar como empleado en la Galería de Arte Goupil de La Haya, que estaba siendo dirigida por su tío.
+      Allí comienza su afición por la pintura y la literatura. Aún con su enfermedad, Vincent siguió pintando 
+      y dibujando sin parar, aunque sus obras continuaron sin tener éxito y sin darle dinero. Tan sólo vendió 
+      dos cuadros en su vida. El 29 de julio del año 1890 Vincent murió en Francia.
+      <h2>Frases celebres:</h2><br>
+      <br>
+    <h3>•	“Más vale ser atrevido, aunque se cometan muchos errores que ser estrecho de mente y demasiado prudente”.
+      <br>
+      •	“Los pescadores saben que el mar es peligroso y la tormenta, terrible. ...
+      <br>
+      •	“Cuando siento una necesidad de religión, salgo de noche y pinto las estrellas”</h3>
+      
+    
+    </H3>
+
+</p>
+
+
+<h2>LA PINTURAS MAS FAMOSAS</h2>
+<table>
+     <tr>
+       <td>
+        <p><img src="https://www.todocuadros.com.mx/media/catalog/product/cache/4/image/490x385/9df78eab33525d08d6e5fb8d27136e95/n/o/noche-estrellada-van-gogh.jpg"  width="200" height="200" align="center"></p>
+          </td>
+         <td>
+          <p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Vincent_Willem_van_Gogh_-_Cafe_Terrace_at_Night_%28Yorck%29.jpg/350px-Vincent_Willem_van_Gogh_-_Cafe_Terrace_at_Night_%28Yorck%29.jpg"  width="200" height="200" align="center"></p>
+           </td>
+          <td> 
+            <p><img src="https://historia-arte.com/_/eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpbSI6WyJcL2FydHdvcmtcL2ltYWdlRmlsZVwvdGVycmF6YS1jYWZlLXZhbi1nb2doLmpwZyIsInJlc2l6ZSwxNTAwfGZvcm1hdCx3ZWJwIl19.KddcEyGT4ug3DMAbTr8-5wZktIEOlkuEoxFz8EB1LAc.webp"  width="200" height="200" align="center"></p>
+               </td>
+           <td>
+            <p><img src="https://historia-arte.com/_/eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpbSI6WyJcL2FydHdvcmtcL2ltYWdlRmlsZVwvMDAtdmluY2VudC12YW4tZ29naC10aGUtbmlnaHQtY2FmYzNhOS0xODg4MTM2NTY0NTM4MDA5NC5qcGciLCJyZXNpemUsMTUwMHxmb3JtYXQsd2VicCJdfQ.2I6W/KtglRu96tikXWCp5sYerMDFTEs_A9lX7z4prgks.webp"  width="200" height="200" align="center"></p>
+            </td>
+     </tr>
+<tr>
+<td>El cuadro La Noche Estrellada de Vincent Van Gogh es una de las obras más famosas del mundo, apreciada por décadas por sus formas sinuosas y azules profundos, para decorar es un gran valor.</td>
+<td>Terraza de café por la noche (también conocida como Terraza del café de la Place du Forum en Arlés por la noche) es una pintura del neerlandés Vincent van Gogh realizada en Arlés en septiembre de 1888 representando el ambiente de una terraza.
+
+  En esta pintura Van Gogh expresó sus nuevas impresiones de Francia meridional. La obra representa un café en la ciudad de Arlés, que en aquel entonces llamaba "Café Terrace" y que más tarde se renombró como "Café Van Gogh".</td>
+<td>Vincent no sólo le escribía a su hermano Theo. También se carteó con su hermana Wil y le describió con precisión el cuadro que estaba creando:
+
+  Un café por la noche visto desde fuera. En la terraza están sentadas pequeñas figuras bebiendo. Un enorme farol amarillo ilumina la terraza, la fachada de la casa, la acera, e incluso extiende su resplandor hasta la calle adoquinada que adquiere una tonalidad rosa-violeta. Las fachadas de las otras casas de la calle, que se alarga bajo el cielo estrellado, son azul oscuras o violetas; ante ellas se encuentra un árbol verde. </td>
+<td>En mi cuadro del café nocturno he tratado de expresar que el café es un sitio donde uno puede arruinarse, volverse loco y cometer crímenes. </td>
+ </tr>
+     </table>
+
+<p>
+  <div><h1><i> Paul Gauguin </i></h1></div>
+  <img src="https://www.frasesypensamientos.com.ar/imagenes/autor/paul-gauguin.jpg" alt="Paul Gauguin" width="400"height="400" align="center"> 
+
+ <H3> Nació en París el 7 de junio de 1848, En 1874, después de conocer al pintor Camille 
+   Pissarro y ver la primera exposición de los impresionistas, se hizo coleccionista y pintor aficionado.
+    Expuso con los impresionistas en 1876, 1880, 1881, 1882 y 1886. En 1882, debido a la quiebra de la Bolsa,
+     decidió convertir su afición a la pintura en oficio. Un año después, su mujer e hijos se fueron a vivir con
+      la familia de ella a Dinamarca. A comienzos de 1884 él se trasladó a Ruán, donde vivía Pissarro. Hombre en 
+      la carretera (Ruán) pintado entonces y que se encuentra en el Museo Thyssen-Bornemisza de Madrid (España), 
+      es una muestra típica del estilo paisajista de Gauguin, aún dominado por la influencia del impresionismo.
+      <h2>Frases celebres:</h2><br> 
+    <br>
+  <h3> •	Estoy entrando en la verdad, en la naturaleza.<br> 
+      •	El arte es un plagio o una revolución. <br>
+      •	Es el ojo de la ignorancia el que asigna un color fijo e inmutable a cada objeto, tenga cuidado con esta piedra para no tropezar.</h3>
+    
+    
+    </H3>
+</p>
+
+
+<h2>LA PINTURAS MAS FAMOSAS</h2>
+<table>
+     <tr>
+       <td>
+        <p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Woher_kommen_wir_Wer_sind_wir_Wohin_gehen_wir.jpg/300px-Woher_kommen_wir_Wer_sind_wir_Wohin_gehen_wir.jpg"  width="300" height="200" align="center"></p>
+          </td>
+         <td>
+          <p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Paul_Gauguin_056.jpg/300px-Paul_Gauguin_056.jpg"  width="200" height="200" align="center"></p>
+           </td>
+          <td> 
+            <p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/La_vision_apr%C3%A8s_le_sermon_%28Paul_Gauguin%29.jpg/300px-La_vision_apr%C3%A8s_le_sermon_%28Paul_Gauguin%29.jpg"  width="200" height="200" align="center"></p>
+               </td>
+           <td>
+            <p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/Paul_Gauguin%2C_Nafea_Faa_Ipoipo%3F_%28When_Will_You_Marry%3F%29_1892%2C_oil_on_canvas%2C_101_x_77_cm.jpg/300px-Paul_Gauguin%2C_Nafea_Faa_Ipoipo%3F_%28When_Will_You_Marry%3F%29_1892%2C_oil_on_canvas%2C_101_x_77_cm.jpg"  width="200" height="300" align="center"></p>
+            </td>
+     </tr>
+<tr>
+<td>¿De dónde venimos? ¿Quiénes somos? ¿Adónde vamos? (D'où venons nous? Que sommes nous? Où allons nous?) es un cuadro de Paul Gauguin 1897 durante Tahití. Se encuentra en el Museo de Bellas Artes de Boston.</td>
+<td>ste cuadro fue realizado por Gauguin durante su segunda estancia en la isla de Tahití. Allí descubrió un tipo femenino distinto al de las mujeres europeas, que reflejó en numerosos cuadros, como este en el que unas mujeres tahitianas se encuentran en la playa.1​
+
+  Una de las mujeres, la que queda a la izquierda del cuadro, viste a la manera tradicional, con ornamentación esquemática y plana que recuerda las estampas japonesas. </td>
+<td>La visión tras el sermón, también llamado La lucha de Jacob con el ángel es un cuadro del pintor francés Paul Gauguin. Está realizado en óleo sobre lienzo. Mide 73 cm de alto y 92 cm de ancho. Fue pintado en 1888. Se encuentra en la National Gallery of Scotland, Edimburgo, Reino Unido.
+
+  Considerada como una de las primeras obras del estilo simbolista en el que empieza a trabajar el artista desde ese momento. Fue pintado para una iglesia de la zona pero el párroco la rechazó.</td>
+<td>¿Cuándo te casas? (Título original en tahitiano Nafé Faaipoipo), es un cuadro de Paul Gauguin hecho en 1892 durante su primera estancia en Tahití. Cedido en depósito durante casi medio siglo al Kunstmuseum Basel,1​ ha sido vendido por la familia de Rudolf Staechlin a un comprador desconocido, a través de Museos de Qatar, en febrero de 2015 por cerca de 300 millones de dólares (268 mm€).</td>
+ </tr>
+     </table>
+
+
+     <H1>ESTE TRABAJO ES DE DANIELA SERRANO PEREZ DE LA CARRERA DE INFORMATICA </H1>
+     
+
+</boody>
+</html>
+
+
+
+
+
+
